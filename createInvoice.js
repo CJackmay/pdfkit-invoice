@@ -4,25 +4,38 @@ const PDFDocument = require("pdfkit");
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
+  // generateCompanyHeader(doc);
   generateHeader(doc);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
-  generateFooter(doc);
+  // generateFooter(doc);
 
   doc.end();
   doc.pipe(fs.createWriteStream(path));
 }
 
+function generateCompanyHeader(doc) {
+  const alignment = "left";
+  doc
+    .image("buka.png", 50, 45, { width: 50 })
+    .fillColor("#444444")
+    // .fontSize(20)
+    // .text("(Buka App) - Buka Drect AB", 110, 57)
+    .fontSize(10)
+    .text("Buka Drect AB (556933-3023)", 50, 100, { align: alignment })
+    .text("Box 7720, 103 95 Stockholm, Sweden", 50, 114, { align: alignment })
+    .text("VAT- SE556933302301", 50, 128, { align: alignment })
+    .moveDown();
+}
+
 function generateHeader(doc) {
   doc
-    .image("logo.png", 50, 45, { width: 50 })
-    .fillColor("#444444")
-    .fontSize(20)
-    .text("ACME Inc.", 110, 57)
-    .fontSize(10)
-    .text("ACME Inc.", 200, 50, { align: "right" })
-    .text("123 Main Street", 200, 65, { align: "right" })
-    .text("New York, NY, 10025", 200, 80, { align: "right" })
+    .fontSize(14)
+    .text('African Magic Salon', 200, 48, { align: 'right' })
+    .fontSize(8)
+    .text('Ölandsgatan 48', 200, 65, { align: 'right' })
+    .text('Stockholm, Stockholm lan, 11663 Sweden', 200, 80, { align: 'right' })
+    .text('VAT- SE 720325182701', 200, 95, { align: 'right' })
     .moveDown();
 }
 
@@ -30,7 +43,7 @@ function generateCustomerInformation(doc, invoice) {
   doc
     .fillColor("#444444")
     .fontSize(20)
-    .text("Invoice", 50, 160);
+    .text("Receipt", 50, 160);
 
   generateHr(doc, 185);
 
@@ -38,12 +51,12 @@ function generateCustomerInformation(doc, invoice) {
 
   doc
     .fontSize(10)
-    .text("Invoice Number:", 50, customerInformationTop)
+    .text("Receipt Number:", 50, customerInformationTop)
     .font("Helvetica-Bold")
     .text(invoice.invoice_nr, 150, customerInformationTop)
     .font("Helvetica")
-    .text("Invoice Date:", 50, customerInformationTop + 15)
-    .text(formatDate(new Date()), 150, customerInformationTop + 15)
+    .text("Date:", 50, customerInformationTop + 15)
+    .text(invoice.date, 150, customerInformationTop + 15)
     .text("Balance Due:", 50, customerInformationTop + 30)
     .text(
       formatCurrency(invoice.subtotal - invoice.paid),
@@ -52,21 +65,30 @@ function generateCustomerInformation(doc, invoice) {
     )
 
     .font("Helvetica-Bold")
+    .text("Bill to", 300, customerInformationTop- 25)
+    .font("Helvetica-Bold")
     .text(invoice.shipping.name, 300, customerInformationTop)
     .font("Helvetica")
     .text(invoice.shipping.address, 300, customerInformationTop + 15)
     .text(
-      invoice.shipping.city +
-        ", " +
-        invoice.shipping.state +
-        ", " +
-        invoice.shipping.country,
+      `${invoice.shipping.city.length > 1 ?
+        `${invoice.shipping.city},` : ""}${invoice.shipping.state.length > 1 ?
+        `${invoice.shipping.state},` : ""}${invoice.shipping.country.length > 1 ?
+          `${invoice.shipping.country}` : ""}`,
       300,
       customerInformationTop + 30
-    )
+  )
+    .text(invoice.shipping.email, 300,
+      customerInformationTop + 45)
     .moveDown();
 
-  generateHr(doc, 252);
+  generateHr(doc, 260);
+
+  // invoice.shipping.city +
+  //   ", " +
+  //   invoice.shipping.state +
+  //   ", " +
+  //   invoice.shipping.country
 }
 
 function generateInvoiceTable(doc, invoice) {
@@ -112,8 +134,18 @@ function generateInvoiceTable(doc, invoice) {
     "",
     formatCurrency(invoice.subtotal)
   );
+  const vatToDatePosition = subtotalPosition + 20;
+  generateTableRow(
+    doc,
+    vatToDatePosition,
+    "",
+    "",
+    "VAT(25%)",
+    "",
+    formatCurrency((invoice.subtotal * 25)/100)
+  );
 
-  const paidToDatePosition = subtotalPosition + 20;
+  const paidToDatePosition = vatToDatePosition + 20;
   generateTableRow(
     doc,
     paidToDatePosition,
@@ -142,7 +174,7 @@ function generateFooter(doc) {
   doc
     .fontSize(10)
     .text(
-      "Payment is due within 15 days. Thank you for your business.",
+      "This purchase is subject to the international market rate of exchange 1 Euro to 5.57 Swedish Krone",
       50,
       780,
       { align: "center", width: 500 }
@@ -177,7 +209,8 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  //.toFixed(2)
+  return "kr" +((cents / 100)).toLocaleString("en-US");
 }
 
 function formatDate(date) {
