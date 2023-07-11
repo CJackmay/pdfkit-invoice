@@ -31,11 +31,11 @@ function generateCompanyHeader(doc) {
 function generateHeader(doc) {
   doc
     .fontSize(14)
-    .text('African Magic Salon', 200, 48, { align: 'right' })
+    .text('Boly Manga', 200, 48, { align: 'right' })
     .fontSize(8)
-    .text('Ölandsgatan 48', 200, 65, { align: 'right' })
-    .text('Stockholm, Stockholm lan, 11663 Sweden', 200, 80, { align: 'right' })
-    .text('VAT- SE 720325182701', 200, 95, { align: 'right' })
+    .text('', 200, 65, { align: 'right' })
+    .text('', 200, 80, { align: 'right' })
+    .text('', 200, 95, { align: 'right' })
     .moveDown();
 }
 
@@ -51,7 +51,7 @@ function generateCustomerInformation(doc, invoice) {
 
   doc
     .fontSize(10)
-    .text("Receipt Number:", 50, customerInformationTop)
+    .text("Invoice Number:", 50, customerInformationTop)
     .font("Helvetica-Bold")
     .text(invoice.invoice_nr, 150, customerInformationTop)
     .font("Helvetica")

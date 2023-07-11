@@ -21,28 +21,28 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Conrows",
-    description: "Onsite payment",
-    quantity: 1,
-    amount: getAmount(2000)
+    item: "Arbetsvagn",
+    description: "Work cart",
+    quantity: 2,
+    amount: getAmount(1000)
   },
 ]
 
 const invoice = {
   shipping: {
-    name: 'Annica Soomaa',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
+    name: 'African Magic Salon',
+    address: 'Ölandsgatan 48',
+    city: 'Stockholm',
+    state: 'Stockholm, Stockholm lan, 11663',
+    country: 'Sweden',
     postal_code: 48015,
     phone: "",
-    email: "annica@linkdetails.com"
+    email: "VAT- SE 720325182701"
   },
   items: items,
   subtotal: total(items),
   paid: total(items),
-  date: "27th June 2023",
+  date: "11th Apr 2023",
   invoice_nr: id
 };
 
