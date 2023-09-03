@@ -21,29 +21,51 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Arbetsvagn",
-    description: "Work cart",
+    item: "Apple appstore publishing",
+    // description: "App signing and release",
+    description: "",
     quantity: 2,
-    amount: getAmount(1000)
+    amount: getAmount(198)
+  },
+  {
+    item: "Android playstore recurring analytics fees",
+    description: "",
+    // description: "Playstore release",
+    quantity: 1,
+    amount: getAmount(60)
+  },
+  {
+    item: "Frontend Repo/code management",
+    // description: "Continuous CI/CD",
+    description: "",
+    quantity: 1,
+    amount: getAmount(130.4)
+  },
+  {
+    item: "Cloud functions management and continuous deployment",
+    description: "",
+    quantity: 1,
+    amount: getAmount(218.4)
   },
 ]
 
 const invoice = {
   shipping: {
-    name: 'African Magic Salon',
-    address: 'Ölandsgatan 48',
-    city: 'Stockholm',
-    state: 'Stockholm, Stockholm lan, 11663',
+    name: 'Buka Drect AB (556933-3023)',
+    address: 'Box 7720',
+    city: 'SE-103 95 Stockholm city',
+    state: 'Stockholm',
     country: 'Sweden',
     postal_code: 48015,
-    phone: "",
-    email: "VAT- SE 720325182701"
+    phone: "admin@boka.direct",
+    email: "VAT- SE556933302301"
   },
   items: items,
-  subtotal: total(items),
-  paid: total(items),
-  date: "11th Apr 2023",
+  subtotal: total(items) + (total(items) * 20) / 100, // vat
+  paid: 0,
+  date: "12th August 2023",
+  due: "14th August 2023",
   invoice_nr: id
 };
 
-createInvoice(invoice, `receipt_${id}-${generateRandomAlphaNumeric(6)}.pdf`);
+createInvoice(invoice, `invoice_${id}-${generateRandomAlphaNumeric(6)}.pdf`);

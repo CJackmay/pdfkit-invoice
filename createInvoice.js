@@ -4,11 +4,11 @@ const PDFDocument = require("pdfkit");
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
-  // generateCompanyHeader(doc);
-  generateHeader(doc);
+  generateCompanyHeader(doc);
+  //generateHeader(doc);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
-  // generateFooter(doc);
+  //generateFooter(doc);
 
   doc.end();
   doc.pipe(fs.createWriteStream(path));
@@ -17,25 +17,27 @@ function createInvoice(invoice, path) {
 function generateCompanyHeader(doc) {
   const alignment = "left";
   doc
-    .image("buka.png", 50, 45, { width: 50 })
+    .image("labs.png", 50, 45, { width: 50 })
     .fillColor("#444444")
     // .fontSize(20)
     // .text("(Buka App) - Buka Drect AB", 110, 57)
     .fontSize(10)
-    .text("Buka Drect AB (556933-3023)", 50, 100, { align: alignment })
-    .text("Box 7720, 103 95 Stockholm, Sweden", 50, 114, { align: alignment })
-    .text("VAT- SE556933302301", 50, 128, { align: alignment })
+    .text("Rebat Technologies OU", 50, 100, { align: alignment })
+    .text("Keemia tn 4,Kristiine Linnaosa, Tallinn", 50, 114, { align: alignment })
+    .text("10616 Harju maakond, Reg No. 16074124", 50, 128, { align: alignment })
+    .text("contact@rebat.org, VAT- EE102325395", 50, 144, { align: alignment })
+    .text("", 50, 160, { align: alignment })
     .moveDown();
 }
 
 function generateHeader(doc) {
   doc
     .fontSize(14)
-    .text('Boly Manga', 200, 48, { align: 'right' })
+    .text('Buka Drect AB (556933-3023)', 200, 48, { align: 'right' })
     .fontSize(8)
-    .text('', 200, 65, { align: 'right' })
-    .text('', 200, 80, { align: 'right' })
-    .text('', 200, 95, { align: 'right' })
+    .text('Box 7720, 103 95 Stockholm, Sweden', 200, 65, { align: 'right' })
+    .text('admin@boka.direct', 200, 80, { align: 'right' })
+    .text('VAT- SE556933302301', 200, 95, { align: 'right' })
     .moveDown();
 }
 
@@ -43,7 +45,7 @@ function generateCustomerInformation(doc, invoice) {
   doc
     .fillColor("#444444")
     .fontSize(20)
-    .text("Receipt", 50, 160);
+    .text("Invoice", 50, 160);
 
   generateHr(doc, 185);
 
@@ -61,9 +63,9 @@ function generateCustomerInformation(doc, invoice) {
     .text(
       formatCurrency(invoice.subtotal - invoice.paid),
       150,
-      customerInformationTop + 30
-    )
-
+      customerInformationTop + 30)
+    .text("Due:", 50, customerInformationTop + 42)
+    .text(invoice.due, 150, customerInformationTop + 42)
     .font("Helvetica-Bold")
     .text("Bill to", 300, customerInformationTop- 25)
     .font("Helvetica-Bold")
@@ -134,15 +136,26 @@ function generateInvoiceTable(doc, invoice) {
     "",
     formatCurrency(invoice.subtotal)
   );
-  const vatToDatePosition = subtotalPosition + 20;
+  const vatExclToDatePosition = subtotalPosition + 20;
+  generateTableRow(
+    doc,
+    vatExclToDatePosition,
+    "",
+    "",
+    "Total excluding tax",
+    "",
+    formatCurrency((invoice.subtotal-((invoice.subtotal * 20)/100)).toFixed(2))
+  );
+  
+  const vatToDatePosition = vatExclToDatePosition + 20;
   generateTableRow(
     doc,
     vatToDatePosition,
     "",
     "",
-    "VAT(25%)",
+    "VAT(20%)",
     "",
-    formatCurrency((invoice.subtotal * 25)/100)
+    formatCurrency(((invoice.subtotal * 20)/100).toFixed(2))
   );
 
   const paidToDatePosition = vatToDatePosition + 20;
@@ -193,7 +206,6 @@ function generateTableRow(
   doc
     .fontSize(10)
     .text(item, 50, y)
-    .text(description, 150, y)
     .text(unitCost, 280, y, { width: 90, align: "right" })
     .text(quantity, 370, y, { width: 90, align: "right" })
     .text(lineTotal, 0, y, { align: "right" });
@@ -210,7 +222,7 @@ function generateHr(doc, y) {
 
 function formatCurrency(cents) {
   //.toFixed(2)
-  return "kr" +((cents / 100)).toLocaleString("en-US");
+  return "€ " +((cents / 100)).toLocaleString("en-US");
 }
 
 function formatDate(date) {
