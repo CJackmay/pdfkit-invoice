@@ -21,18 +21,18 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Apple appstore publishing",
+    item: "Apple app-store publishing",
     // description: "App signing and release",
     description: "",
     quantity: 2,
     amount: getAmount(198)
   },
   {
-    item: "Android playstore recurring analytics fees",
+    item: "Android play-store recurring analytics fees",
     description: "",
     // description: "Playstore release",
     quantity: 1,
-    amount: getAmount(60)
+    amount: getAmount(62)
   },
   {
     item: "Frontend Repo/code management",
@@ -63,8 +63,8 @@ const invoice = {
   items: items,
   subtotal: total(items) + (total(items) * 20) / 100, // vat
   paid: 0,
-  date: "12th August 2023",
-  due: "14th August 2023",
+  date: "2nd October 2023",
+  due: "12th October 2023",
   invoice_nr: id
 };
 

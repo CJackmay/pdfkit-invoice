@@ -5,7 +5,7 @@ function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   generateCompanyHeader(doc);
-  //generateHeader(doc);
+  generateHeader(doc);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
   //generateFooter(doc);
@@ -102,7 +102,6 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     invoiceTableTop,
     "Item",
-    "Description",
     "Unit Cost",
     "Quantity",
     "Line Total"
@@ -117,7 +116,6 @@ function generateInvoiceTable(doc, invoice) {
       doc,
       position,
       item.item,
-      item.description,
       formatCurrency(item.amount / item.quantity),
       item.quantity,
       formatCurrency(item.amount)
@@ -131,7 +129,6 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     subtotalPosition,
     "",
-    "",
     "Subtotal",
     "",
     formatCurrency(invoice.subtotal)
@@ -140,7 +137,6 @@ function generateInvoiceTable(doc, invoice) {
   generateTableRow(
     doc,
     vatExclToDatePosition,
-    "",
     "",
     "Total excluding tax",
     "",
@@ -152,7 +148,6 @@ function generateInvoiceTable(doc, invoice) {
     doc,
     vatToDatePosition,
     "",
-    "",
     "VAT(20%)",
     "",
     formatCurrency(((invoice.subtotal * 20)/100).toFixed(2))
@@ -162,7 +157,6 @@ function generateInvoiceTable(doc, invoice) {
   generateTableRow(
     doc,
     paidToDatePosition,
-    "",
     "",
     "Paid To Date",
     "",
@@ -174,7 +168,6 @@ function generateInvoiceTable(doc, invoice) {
   generateTableRow(
     doc,
     duePosition,
-    "",
     "",
     "Balance Due",
     "",
@@ -198,7 +191,6 @@ function generateTableRow(
   doc,
   y,
   item,
-  description,
   unitCost,
   quantity,
   lineTotal
