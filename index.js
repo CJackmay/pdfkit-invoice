@@ -21,29 +21,29 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Arbetsvagn",
-    description: "Work cart",
-    quantity: 2,
-    amount: getAmount(1000)
+    item: "Legal Consultation",
+    description: "",
+    quantity: 1,
+    amount: getAmount(2500)
   },
 ]
 
 const invoice = {
   shipping: {
-    name: 'African Magic Salon',
-    address: 'Ölandsgatan 48',
+    name: 'Confidence Jackmay - Akub AB',
+    address: 'Box 7720',
     city: 'Stockholm',
-    state: 'Stockholm, Stockholm lan, 11663',
+    state: 'Stockholm lan, SE- 103 95',
     country: 'Sweden',
     postal_code: 48015,
     phone: "",
-    email: "VAT- SE 720325182701"
+    email: "VAT- SE556933302301"
   },
   items: items,
   subtotal: total(items),
   paid: total(items),
-  date: "11th Apr 2023",
+  date: "14th Oct 2023",
   invoice_nr: id
 };
 
-createInvoice(invoice, `receipt_${id}-${generateRandomAlphaNumeric(6)}.pdf`);
+createInvoice(invoice, `invoice_${id}-${generateRandomAlphaNumeric(6)}.pdf`);
