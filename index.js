@@ -21,37 +21,22 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Apple app-store publishing",
-    // description: "App signing and release",
-    description: "",
-    quantity: 2,
-    amount: getAmount(198)
-  },
-  {
-    item: "Android play-store recurring analytics fees",
-    description: "",
-    // description: "Playstore release",
-    quantity: 1,
-    amount: getAmount(62)
-  },
-  {
-    item: "Frontend Repo/code management",
-    // description: "Continuous CI/CD",
+    item: "Operations fee",
     description: "",
     quantity: 1,
-    amount: getAmount(130.4)
+    amount: getAmount(65.96)
   },
   {
-    item: "Cloud functions management and continuous deployment",
+    item: "Micro-services repo management (Full-stack)",
     description: "",
     quantity: 1,
-    amount: getAmount(218.4)
+    amount: getAmount(403.58)
   },
 ]
 
 const invoice = {
   shipping: {
-    name: 'Buka Drect AB (556933-3023)',
+    name: 'Akub AB (556933-3023)',
     address: 'Box 7720',
     city: 'SE-103 95 Stockholm city',
     state: 'Stockholm',
@@ -61,11 +46,52 @@ const invoice = {
     email: "VAT- SE556933302301"
   },
   items: items,
-  subtotal: total(items) + (total(items) * 20) / 100, // vat
-  paid: 0,
-  date: "2nd October 2023",
-  due: "12th October 2023",
+  subtotal: total(items), // vat
+  // subtotal: total(items) + (total(items) * 20) / 100, // vat
+  paid: getAmount(469.54),
+  date: "20th November 2023",
+  due: "1st December 2023",
   invoice_nr: id
 };
 
 createInvoice(invoice, `invoice_${id}-${generateRandomAlphaNumeric(6)}.pdf`);
+
+
+// var items = [
+//   {
+//     item: "Eden AI services for api consumption",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(100)
+//   },
+//   {
+//     item: "Sub-Cloud infrastructure - proxy services",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(60)
+//   },
+//   {
+//     item: "Api documentations",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(40)
+//   },
+//   {
+//     item: "IP lookup api access",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(16.4)
+//   },
+//   {
+//     item: "PDF Kit manipulation services",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(12)
+//   },
+//   {
+//     item: "Micro-services repo management (Full-stack)",
+//     description: "",
+//     quantity: 1,
+//     amount: getAmount(80)
+//   },
+// ]

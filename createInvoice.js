@@ -33,7 +33,7 @@ function generateCompanyHeader(doc) {
 function generateHeader(doc) {
   doc
     .fontSize(14)
-    .text('Buka Drect AB (556933-3023)', 200, 48, { align: 'right' })
+    .text('Akub AB (556933-3023)', 200, 48, { align: 'right' })
     .fontSize(8)
     .text('Box 7720, 103 95 Stockholm, Sweden', 200, 65, { align: 'right' })
     .text('admin@boka.direct', 200, 80, { align: 'right' })
@@ -140,7 +140,7 @@ function generateInvoiceTable(doc, invoice) {
     "",
     "Total excluding tax",
     "",
-    formatCurrency((invoice.subtotal-((invoice.subtotal * 20)/100)).toFixed(2))
+    formatCurrency((invoice.subtotal-((invoice.subtotal * 20)/100).toFixed(2)))
   );
   
   const vatToDatePosition = vatExclToDatePosition + 20;
@@ -214,7 +214,12 @@ function generateHr(doc, y) {
 
 function formatCurrency(cents) {
   //.toFixed(2)
-  return "€ " +((cents / 100)).toLocaleString("en-US");
+  var sum = (cents / 100).toFixed(2);
+  return "€ " +(sum > 0 ? sum: 0.00).toLocaleString("en-US");
+}
+
+function rounder(num) {
+  return Math.round((num + Number.EPSILON) * 100) / 100;
 }
 
 function formatDate(date) {
