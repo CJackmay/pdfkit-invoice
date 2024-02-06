@@ -21,28 +21,28 @@ const id = Number.parseInt(getData());
 
 var items = [
   {
-    item: "Arbetsvagn",
-    description: "Work cart",
-    quantity: 2,
-    amount: getAmount(1000)
+    item: "Onsite service charge for beauty reservation",
+    description: "",
+    quantity: 1,
+    amount: getAmount(3500)
   },
 ]
 
 const invoice = {
   shipping: {
-    name: 'African Magic Salon',
-    address: 'Ölandsgatan 48',
-    city: 'Stockholm',
-    state: 'Stockholm, Stockholm lan, 11663',
+    name: 'Anna Sise',
+    address: 'Gotlandsgatan 56',
+    city: '',
+    state: 'SE-116 65 Stockholm SE',
     country: 'Sweden',
     postal_code: 48015,
     phone: "",
-    email: "VAT- SE 720325182701"
+    email: "sisemiusicprod@gmail.com"
   },
   items: items,
   subtotal: total(items),
   paid: total(items),
-  date: "11th Apr 2023",
+  date: "1st November 2023",
   invoice_nr: id
 };
 

@@ -4,7 +4,7 @@ const PDFDocument = require("pdfkit");
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
-  // generateCompanyHeader(doc);
+  generateCompanyHeader(doc);
   generateHeader(doc);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
@@ -17,12 +17,12 @@ function createInvoice(invoice, path) {
 function generateCompanyHeader(doc) {
   const alignment = "left";
   doc
-    .image("buka.png", 50, 45, { width: 50 })
+    .image("akub.png", 50, 45, { width: 50 })
     .fillColor("#444444")
     // .fontSize(20)
     // .text("(Buka App) - Buka Drect AB", 110, 57)
     .fontSize(10)
-    .text("Buka Drect AB (556933-3023)", 50, 100, { align: alignment })
+    .text("Akub AB (556933-3023)", 50, 100, { align: alignment })
     .text("Box 7720, 103 95 Stockholm, Sweden", 50, 114, { align: alignment })
     .text("VAT- SE556933302301", 50, 128, { align: alignment })
     .moveDown();
@@ -31,11 +31,11 @@ function generateCompanyHeader(doc) {
 function generateHeader(doc) {
   doc
     .fontSize(14)
-    .text('Boly Manga', 200, 48, { align: 'right' })
+    .text('African Magic Salon', 200, 48, { align: 'right' })
     .fontSize(8)
-    .text('', 200, 65, { align: 'right' })
-    .text('', 200, 80, { align: 'right' })
-    .text('', 200, 95, { align: 'right' })
+    .text('Ölandsgatan 48', 200, 65, { align: 'right' })
+    .text('Stockholm, Stockholm lan, 11663', 200, 80, { align: 'right' })
+    .text('VAT- SE 720325182701', 200, 95, { align: 'right' })
     .moveDown();
 }
 
